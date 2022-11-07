@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Lobster&family=Rubik:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --secondary: rgb(236, 200, 40);
+        --primary: linear-gradient(
+          to right,
+          rgb(96, 165, 250),
+          rgb(52, 211, 153)
+        );
+        --text: rgb(230, 230, 230);
+        --dark: rgba(0, 0, 0, 0.9);
+      }
+      * {
+        /* background-color: var(--dark); */
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Two containers absolutely positioned */
+      .slide {
+        height: 100vh;
+        width: 100%;
+        display: grid;
+        place-items: center;
+        /* Absolutely position our slide containers on top of each other */
+        position: absolute;
+        /* Hide the overflow (overlapping) of each section */
+        overflow: hidden;
+      }
+      #left-side {
+        background-image: var(--primary);
+        z-index: 2;
+      }
+      #right-side {
+        background-color: var(--secondary);
+      }
+
+      .title {
+        font-family: "Rubik";
+        width: 70vw;
+        font-size: 7vw;
+        margin: 0px 15vw; /* centering with margin left and right */
+        text-shadow: 0px 0px 18px rgba(0, 0, 0, 0.2);
+      }
+      .fancy {
+        font-family: "Lobster";
+        font-size: 1.2em;
+        line-height: 0.8em;
+        color: var(--secondary);
+      }
+      #left-side .title {
+        color: var(--text);
+      }
+      #left-side .fancy {
+        color: var(--secondary);
+      }
+      #right-side .title {
+        color: var(--dark);
+      }
+      #right-side .fancy {
+        color: var(--text);
+      }
+    </style>
+    <title>Revealing hero header</title>
+  </head>
+
+  <body>
+    <div id="left-side" class="slide">
+      <h2 class="title">
+        You're going to be <span class="fancy">awesome</span>
+      </h2>
+    </div>
+    <div id="right-side" class="slide">
+      <h2 class="title">
+        You're going to be <span class="fancy">wonderful</span>
+      </h2>
+    </div>
+
+    <script>
+      const left = document.getElementById("left-side");
+      /* Here we define a mouse listener to handle the sliding of the left-side
+      container over the other via mouse movement. First we need the `width` in
+      percentage based on mouse position, compared to window `innerWidth`. */
+      const handleSlide = (e) => {
+        const { clientX } = e;
+        const { innerWidth } = window;
+        const percentage = (clientX / innerWidth) * 100;
+        // ...
+        console.log({ clientX, innerWidth }); // These property values give,
+        console.log("=", percentage, "%"); // <-- our percentage :)
+        // ...
+        // Update our left-side container width:
+        left.style.width = `${percentage}%`;
+      };
+      document.onmousemove = (e) => handleSlide(e);
+      document.ontouchmove = (e) => handleSlide(e.touches[0]); // For mobile
+    </script>
+  </body>
+</html>
